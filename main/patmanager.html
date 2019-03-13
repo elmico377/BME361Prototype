@@ -1,9 +1,36 @@
 <html>
 <head>
+<style>
+.backbutton{
+	background-color:#233434;
+	color:white;
+	font-family: Open Sans;
+	width:30%;
+	fond-size: 15px;
+	padding:10px;
+	border: none;
+	text-align:left;
+}
+.backbutton:hover{
+	background-color:#334949;
+}
+</style>
 <title>Falcon</title>
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 </head>
-<body style="background-color:#28305C">
+<body style="background-color:#233434">
+
+	<a href="main.html">
+		<button class="backbutton" style="position:absolute;left:0px;top:0px;width:80px">← Back</button>
+	</a>
+	<h1 style="font-family: Open Sans; padding-top:20px; color:#e0ecff;text-align:center"> PATIENT MANAGEMENT </h1>	
+	
+	<p style="text-align:center"><input type="text" name="search" value="Search"></p>
+	
+	<a href="newpat.html">
+		<button class="backbutton" style="text-align:center;left:0px;top:0px;width:10%;margin-left:45%">Add Patient</button>
+	</a>
+
 </body>
 </html>
