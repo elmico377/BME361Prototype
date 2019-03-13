@@ -180,24 +180,102 @@ body {
 <script type="text/javascript">
         jQuery(document).ready(function(){
             var r1001 = jQuery('#r1001')
+			var r1002 = jQuery('#r1002')
+			var r1003 = jQuery('#r1003')
+			var r1004 = jQuery('#r1004')
+			var r1005 = jQuery('#r1005')
+			var rwalk = jQuery('#rwalk')
+			var hall1 = jQuery('#hall1')
+			var hall2 = jQuery('#hall2')
+			var hall3 = jQuery('#hall3')
             // When click this button then execute below function.
             r1001.bind('click', function () {
                 // Alert the text.
-                alert('You click the patient room');
+                alert('You click room 1001');
             })
+			r1002.bind('click', function () {
+                // Alert the text.
+                alert('You click room 1002');
+            })
+			r1003.bind('click', function () {
+                // Alert the text.
+                alert('You click room 1003');
+            })
+			r1004.bind('click', function () {
+                // Alert the text.
+                alert('You click room 1004');
+            })
+			r1005.bind('click', function () {
+                // Alert the text.
+                alert('You click room 1005');
+            })
+			rwalk.bind('click', function () {
+                // Alert the text.
+                alert('You click the walking room');
+            })
+			hall1.bind('click', function () {
+                // Alert the text.
+                alert('You click on the hall');
+            })
+			hall2.bind('click', function () {
+                // Alert the text.
+                alert('You click on the hall');
+            })
+			hall3.bind('click', function () {
+                // Alert the text.
+                alert('You click on the hall');
+            })
+
         });
 </script>
 </head>
 <body style="background-color:#28305C">
 <!--                                                                  LEFT SIDE -->
 <div class="splitleft left" style="background-color:white;margin:0;padding:0">
-	<div style="height:40%;width:100%;top:0;background-color:white"> 
-		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">
+	<div style="height:38%;width:100%;top:0;background-color:white"> 
+		<div id="r1001" style="height:100%;width:26%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 0 2 2">
+			<h2 style="font-family: Open Sans;">1001</h2>
+			<canvas id="r1001dots" style="width:100%;height:50%"></canvas>
+			<script>
+				var canvas = document.getElementById("r1001dots");
+				var ctx = canvas.getContext("2d");
+				ctx.beginPath();
+				ctx.arc(150,100,10,0,2*Math.PI);
+				ctx.fillStyle="#0066cc";
+				ctx.fill();
+				canvas.addEventListener("mouseover",hoverCirc(event));
+				canvas.addEventListener("click",clickCirc(event));
+				function hoverCirc(event){
+					
+					//alert("is hovering")
+				}
+				function clickCirc(event){
+				}
+			</script>
 		</div>
-		<div id="r1001" style="height:100%;width:70%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
-			<h2 style="font-family: Open Sans;">Patient Room</h2>
+		<div id="r1002" style="height:100%;width:26%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
+			<h2 style="font-family: Open Sans;">1002</h2>
 		</div>
-		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">		
+		<div id="hall1" style="height:100%;width:20%;z-index:1;top:0;background-color:white;float:left">
+		</div>
+		<div id="rwalk" style="height:100%;width:28%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2px">
+			<h2 style="font-family: Open Sans;">Walking room</h2>
+		</div>
+	</div>
+	<div id="hall2" style="height:25%;width:100%;z-index:1;top:0;background-color:white">
+	</div>
+	<div style="height:37%;width:100%;z-index:1;top:0;background-color:white">
+		<div id="r1003" style="height:100%;width:27%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 0 2 2">
+			<h2 style="font-family: Open Sans;">1003</h2>
+		</div>
+		<div id="r1004" style="height:100%;width:27%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 0 2 2">
+			<h2 style="font-family: Open Sans;">1004</h2>
+		</div>
+		<div id="r1005" style="height:100%;width:27%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
+			<h2 style="font-family: Open Sans;">1005</h2>
+		</div>
+		<div id="hall3"style="height:100%;width:19%;z-index:1;top:0;background-color:white;float:left">
+		
 		</div>
 	</div>
 </div>
@@ -235,23 +313,10 @@ body {
 		updateClock(); // initial call
 	</script>
 	
-	
-</div>
-
-<div id="greyout" class="splitright splitleft right left" style="background-color:rgba(0,0,0,0.6);z-index:3;width:100%;height:100%;display:none">
-</div>
-
-<div class="splitright right" style="z-index:10">
 	<div style="position:absolute;width:100%;text-align:center;bottom:75;text-align:center" class="opencol">
-		<a href="roomManager.html">
-			<button style="font-family:Open Sans" class="dankbutton">Room Management</button>
-		</a>
-		<a href="dlm.html">
-			<button style="font-family:Open Sans" class="dankbutton">Door Lock Management</button>
-		</a>
-		<a href="patmanager.html">
-			<button style="font-family:Open Sans" class="dankbutton">Patient Management</button>
-		</a>
+		<button style="font-family:Open Sans" class="dankbutton">Rule Management</button>
+		<button style="font-family:Open Sans" class="dankbutton">Sensor Override</button>
+		<button style="font-family:Open Sans" class="dankbutton">Patient Management</button>
 		<button style="font-family:Open Sans" class="dankbutton" id="myBtn">Activity/Reports</button>
 	</div>
 	<button style="position:absolute;font-family:Open Sans;right:0;bottom:20;text-align:center" class="collapsible">Tools</button>
@@ -259,7 +324,6 @@ body {
 	<script>
 		var coll = document.getElementsByClassName("collapsible");
 		var i;
-		var greybox = document.getElementById("greyout");
 
 		for (i = 0; i < coll.length; i++) {
 		  coll[i].addEventListener("click", function() {
@@ -267,10 +331,8 @@ body {
 			var content = this.previousElementSibling;
 			if (content.style.display === "block") {
 			  content.style.display = "none";
-			  greybox.style.display = "none";
 			} else {
 			  content.style.display = "block";
-			  greybox.style.display = "block";
 			}
 		  });
 		}
