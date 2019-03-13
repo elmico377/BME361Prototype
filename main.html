@@ -1,0 +1,340 @@
+<html>
+<style>
+.splitleft {
+  height: 100%;
+  width: 75%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.splitright {
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+body {
+    margin: 0;
+    text-align: center;
+}
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+.dankbutton{
+	background-color:#eaf2ff;
+	width:100%;
+	fond-size: 15px;
+	padding:10px;
+	border: none;
+	text-align:center;
+}
+.dankbutton:hover{
+	background-color:#f9fbff;
+}
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.opencol {
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The container */
+.container {
+  margin-left:20px;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16pt;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: white;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
+<head>
+<title>Falcon</title>
+<link rel="icon" href="headlogo.png">
+<script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+        jQuery(document).ready(function(){
+            var r1001 = jQuery('#r1001')
+            // When click this button then execute below function.
+            r1001.bind('click', function () {
+                // Alert the text.
+                alert('You click the patient room');
+            })
+        });
+</script>
+</head>
+<body style="background-color:#28305C">
+<!--                                                                  LEFT SIDE -->
+<div class="splitleft left" style="background-color:white;margin:0;padding:0">
+	<div style="height:40%;width:100%;top:0;background-color:white"> 
+		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">
+		</div>
+		<div id="r1001" style="height:100%;width:70%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
+			<h2 style="font-family: Open Sans;">Patient Room</h2>
+		</div>
+		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">		
+		</div>
+	</div>
+</div>
+
+<!--                                                                  RIGHT SIDE -->
+<div class="splitright right">
+	<h1 style="font-family: Open Sans; color:#e0ecff;text-align:center"> ACTIVITY BOARD </h1>
+	<p style="font-family:Open Sans; color:white; text-align:center;font-size:24pt">
+		<font color="white">
+			<strong>
+				<span id="time"></span>
+			</strong>           
+		</font>
+	</p>
+	<script>
+		function updateClock() {
+			var today = new Date(); // current date
+			var sec = parseInt(today.getSeconds()).toString();
+			var min = parseInt(today.getMinutes()).toString();
+			var hour = parseInt(today.getHours()).toString();
+			if (sec.length == 1){
+				sec = "0" + sec;
+			}
+			if (min.length == 1){
+				min = "0" + min;
+			}
+			if (hour.length == 1){
+				hour = "0" + hour;
+			}
+			document.getElementById('time').innerHTML= hour + ":" + min + ":" + sec;
+
+			// call this function again in 1000ms
+			setTimeout(updateClock, 1000);
+		}
+		updateClock(); // initial call
+	</script>
+	
+	
+</div>
+
+<div id="greyout" class="splitright splitleft right left" style="background-color:rgba(0,0,0,0.6);z-index:3;width:100%;height:100%;display:none">
+</div>
+
+<div class="splitright right" style="z-index:10">
+	<div style="position:absolute;width:100%;text-align:center;bottom:75;text-align:center" class="opencol">
+		<a href="roomManager.html">
+			<button style="font-family:Open Sans" class="dankbutton">Room Management</button>
+		</a>
+		<a href="dlm.html">
+			<button style="font-family:Open Sans" class="dankbutton">Door Lock Management</button>
+		</a>
+		<a href="patmanager.html">
+			<button style="font-family:Open Sans" class="dankbutton">Patient Management</button>
+		</a>
+		<button style="font-family:Open Sans" class="dankbutton" id="myBtn">Activity/Reports</button>
+	</div>
+	<button style="position:absolute;font-family:Open Sans;right:0;bottom:20;text-align:center" class="collapsible">Tools</button>
+	
+	<script>
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		var greybox = document.getElementById("greyout");
+
+		for (i = 0; i < coll.length; i++) {
+		  coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.previousElementSibling;
+			if (content.style.display === "block") {
+			  content.style.display = "none";
+			  greybox.style.display = "none";
+			} else {
+			  content.style.display = "block";
+			  greybox.style.display = "block";
+			}
+		  });
+		}
+	</script>
+	
+	<div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+		<span class="close">&times;</span>
+		<div style="background-color:#b8c7e0; margin-right:30px; margin-left:30px;text-align:left;padding-top:10px;padding-bottom:10px">
+			<p style="font-family:Open Sans;text-align:center;font-size:18pt">Activity Board Notifications</p>
+			<label class="container">
+				<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Entering/Exiting Room</p><br>
+			</label>
+			<label class="container">
+				<input type="checkbox" ><span class="checkmark"></span> <p style="display:inline;text-align:left;font-family:Open Sans">Conflict Risks</p><br>
+			</label>
+			<label class="container">
+			<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Room at Full Occupancy</p><br>
+			</label>
+			<button style="margin:0 auto; display:block">Save</button>
+		</div>
+		<div style="background-color:#b8c7e0; margin-right:30px; margin-left:30px;text-align:left;margin-top:10px;padding-top:10px;padding-bottom:10px">
+			<p style="font-family:Open Sans;text-align:center;font-size:18pt">Export Reports</p>
+			<label class="container">
+				<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Full Unit Report</p><br>
+			</label>
+			<label class="container">
+				<input type="checkbox" ><span class="checkmark"></span> <p style="display:inline;text-align:left;font-family:Open Sans">Each Patient's Activity Timeline</p><br>
+			</label>
+			<button style="margin:0 auto; display:block">Export</button>
+		</div>
+	  </div>
+
+	</div>
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+		  modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+			modal.style.display = "none";
+		  }
+		}
+	</script>
+</div>
+</body>
+</html>
