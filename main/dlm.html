@@ -193,14 +193,41 @@ body {
 <script type="text/javascript">
         jQuery(document).ready(function(){
             var r1001 = jQuery('#r1001')
+			var r1001door = jQuery('#r1001door')
+			var emunlock = jQuery('#emunlock')
+			var emlock = jQuery('#emlock')
+			var state = true;
             // When click this button then execute below function.
             r1001.bind('click', function () {
                 // Alert the text.
-                alert('You click the patient room');
+				if (state == false){
+					alert('Attempting to Lock Door');
+					state = true;
+					r1001door.css("background-color", "#3f7755");
+				}
+				else{
+					alert('Attempting to Unlock Door');
+					state = false;
+					r1001door.css("background-color", "#bf4848");
+				}
             })
-			var r1001unlock = jQuery('#r1001unlock')
-			r1001unlock.bind('click', function () {
-				alert('Attempting to Lock Door');
+			r1001door.bind('click', function () {
+				if (state == false){
+					alert('Attempting to Lock Door');
+					state = true;
+					r1001door.css("background-color", "#3f7755");
+				}
+				else{
+					alert('Attempting to Unlock Door');
+					state = false;
+					r1001door.css("background-color", "#bf4848");
+				}
+			})
+			emunlock.bind('click',function (){
+				r1001door.css("background-color", "#bf4848");
+			})
+			emlock.bind('click',function (){
+				r1001door.css("background-color", "#3f7755");
 			})
         });
 </script>
@@ -215,7 +242,7 @@ body {
 			<h2 style="font-family: Open Sans;">Patient Room</h2>
 		</div>
 	</div>
-	<div id="r1001unlock" style="background-color:#3f7755;width:10%;height:2%;margin-left:45%">
+	<div id="r1001door" style="background-color:#3f7755;width:10%;height:2%;margin-left:45%">
 			
 	</div>
 </div>
@@ -229,16 +256,14 @@ body {
 	
 	<h3 style="font-family: Open Sans; color:#e0ecff;text-align:center"> Lock Activation:</h3>
 	
-	<div style="background-color:white;height:55%;width:80%;margin-left:10%;margin-bottom:5%">
+	<div style="background-color:white;height:45%;width:80%;margin-left:10%;margin-bottom:5%">
 		
 	</div>
-	<a href="dlm.html">
-		<button class="backbutton" style="background-color:#334949; text-align:center;left:0px;top:0px;width:40%">Apply</button>
-	</a>
+	<button class="backbutton" style="background-color:#334949; text-align:center;left:0px;top:0px;width:40%">Apply</button>
 	</br>
-	<a href="dlm.html">
-		<button class="backbutton" style="background-color:#334949;margin-top:10px; text-align:center;left:0px;top:0px;width:40%">Emergency Unlock</button>
-	</a>
+	<button id="emunlock" class="backbutton" style="background-color:#334949;margin-top:10px; text-align:center;left:0px;top:0px;width:40%">Emergency Unlock</button>
+	</br>
+	<button id="emlock" class="backbutton" style="background-color:#334949;margin-top:10px; text-align:center;left:0px;top:0px;width:40%">Emergency Lockdown</button>
 </div>
 
 <div id="greyout" class="splitright splitleft right left" style="background-color:rgba(0,0,0,0.6);z-index:3;width:100%;height:100%;display:none">
