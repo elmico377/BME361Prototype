@@ -43,20 +43,53 @@
 <title>Falcon</title>
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-        jQuery(document).ready(function(){
-            var r1001 = jQuery('#r1001')
-            // When click this button then execute below function.
-            r1001.bind('click', function () {
-                // Alert the text.
-                alert('You click the patient room');
-            })
-        });
-</script>
 </head>
 <body style="background-color:#233434">
-	<div class="splitleft left" style="background-color:white;margin:0;padding:0">
-		
+	<div class="splitleft left" style="background-color:white;margin:0;padding:0;text-align:center;padding-left:5%;padding-right:5%;padding-top:2%;box-sizing:border-box">
+		<div style="text-align:right;padding-bottom:2%">
+			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:70%">First Name</span>
+			</br>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="firstName" value="" style="width:80%"></span>
+			</br>
+			</br>
+			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:70%">Last Name</span>
+			</br>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="lastName" value="" style="width:80%"></span>
+		</div>
+		<div style="padding-bottom:2%">
+			<div style="text-align:left">
+				<span style="margin-left:2%;margin-right:31%;font-family: Open Sans, Times, serif;color:#233434;font-size:14pt">Age</span>
+				<span style="margin-right:29%;font-family: Open Sans, Times, serif;color:#233434;font-size:14pt">Sex</span>
+				<span style="padding-left:20px;text-align:Left;font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:0pt">Date of Birth</span>
+			</div>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="Age" value="" style="width:29%"></span>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="Sex" value="" style="width:29%;margin-left:3%"></span>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="dob" value="" style="width:29%;margin-left:3%"></span>
+		</div>
+		<div style="padding-bottom:2%">
+			<div style="text-align:left">
+				<span style="margin-left:2%;margin-right:38%;font-family: Open Sans, Times, serif;color:#233434;font-size:14pt">Room Number</span>
+				<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt">Family Doctor Contact</span>
+			</div>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="roomNum" value="" style="width:46%"></span>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="doctorName" value="" style="width:46%;margin-left:3%"></span>
+		</div>
+		<div style="padding-bottom:2%">
+			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:75%">Admittance Information</span>
+			</br>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="admitInfo" value="" style="width:98%"></span>
+		</div>
+		<div style="padding-bottom:2%">
+			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:70%">Relevant Medical Information</span>
+			</br>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="medInfo" value="" style="width:98%"></span>
+		</div>
+		<div>
+			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:83%">Notes for Care</span>
+			</br>
+			<span style="padding-left:20px;text-align:Left"><input type="text" name="notes" value="" style="width:98%"></span>
+		</div>
+		<button class="backbutton" style="text-align:center;left:0px;top:0px;width:20%;margin-top:10%">Import EMR</button>
 	</div>
 	<div class="splitright right">
 		<a href="patmanager.html">
@@ -64,8 +97,8 @@
 		</a>
 		<h1 style="font-family: Open Sans; color:#e0ecff;text-align:center"> ADD A PATIENT </h1>
 		<a href="patmanager.html">
-		<button class="backbutton" style="background-color:#334949; text-align:center;left:0px;top:0px;margin-top:150%;width:20%;margin-left:40%">Save</button>
-	</a>
+		<button class="backbutton" style="text-align:center;left:0px;top:0px;margin-top:150%;width:20%;margin-left:40%;border-style:solid;border-color:white;border-width:1px">Save</button>
+		</a>
 	</div>
 </body>
 </html>

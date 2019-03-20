@@ -38,24 +38,32 @@
 .backbutton:hover{
 	background-color:#334949;
 }
+.coolp{
+	font-family: Open Sans;
+}
+.coolh3{
+	font-family: Open Sans;
+}
 </style>
 <head>
 <title>Falcon</title>
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-        jQuery(document).ready(function(){
-            var r1001 = jQuery('#r1001')
-            // When click this button then execute below function.
-            r1001.bind('click', function () {
-                // Alert the text.
-                alert('You click the patient room');
-            })
-        });
-</script>
 </head>
 <body style="background-color:#233434">
 	<div class="splitleft left" style="background-color:white;margin:0;padding:0">
+		<h1 id="name" style="font-family: Open Sans; color:black;text-align:center">NAME</h1>
+		<span class="coolp" style="display:inline">Home Room: </span>
+		<span class="coolp" id="homeroom">ROOM</br></span>
+		
+		<span class="coolp" style="display:inline">Current Location: </span>
+		<span class="coolp" id="loc">ROOM</br></span>
+		
+		<p class="coolp" style="display:inline">Notes: </p>
+		<p class="coolp" id="room">THIS IS SOME NOTES AND STUFF</p>
+		
+		<h3 class="coolp">Room Access</h3>
+		<h3 class="coolp">Persons of Conflict</h3>
 		
 	</div>
 	<div class="splitright right">
