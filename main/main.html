@@ -180,11 +180,44 @@ body {
 <script type="text/javascript">
         jQuery(document).ready(function(){
             var r1001 = jQuery('#r1001')
+			//var greenO = jQuery('GreenOutside')
+			//var greenI = jQuery('GreenInside')
+			//var redO = jQuery('RedOutside')
+			//var redI = jQuery('RedInside')
             // When click this button then execute below function.
-            r1001.bind('click', function () {
-                // Alert the text.
-                alert('You click the patient room');
-            })
+			var redLoc = 0;
+			var greenLoc = 0;
+			
+			try{
+				redLoc = localstorage.getItem("redlocation"); // 1 means outside?
+				greenLoc = localstorage.getItem("greenlocation");
+			}
+			catch(e){
+				redLoc = 1;
+				localstorage.setItem("redlocation",redLoc);
+				greenLoc = 0;
+				localstorage.setItem("greenlocation",greenLoc);
+			}
+			r1001.bind('click', function () {
+				alert('Attempting to Lock Door');
+				
+			})
+			if (redLoc == 1){
+				$("#RedOutside").hide();
+				$("#RedInside").show();
+			}
+			else{
+				$("#RedOutside").show();
+				$("#RedInside").hide();
+			}
+			if (greenLoc == 1){
+				$("#GreenOutside").hide();
+				$("#GreenInside").show();
+			}
+			else{
+				$("#GreenOutside").show();
+				$("#GreenInside").hide();
+			}
         });
 </script>
 </head>
@@ -196,9 +229,13 @@ body {
 		</div>
 		<div id="r1001" style="height:100%;width:70%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
 			<h2 style="font-family: Open Sans;">Patient Room</h2>
+			<img id="GreenInside" src="Green_Oval.png" height="42" width="42">
+			<img id="RedInside" src="Red_Oval.png" height="42" width="42">
 		</div>
 		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">		
 		</div>
+		<img id="GreenOutside" src="Green_Oval.png" height="42" width="42" style="margin-top:100px">
+		<img id="RedOutside" src="Red_Oval.png" height="42" width="42" style="margin-top:100px">
 	</div>
 </div>
 

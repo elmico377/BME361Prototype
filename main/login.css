@@ -17,7 +17,7 @@ input[type=text] {
     padding: 15px 20px;
     color: white;
     border: 2px solid white;
-    background-color: #28305C;
+    background-color: #233434;
     border-radius: 4px;
 }
 
@@ -26,6 +26,6 @@ input[type=password] {
     padding: 15px 20px;
     color: white;
     border: 2px solid white;
-    background-color: #28305C;
+    background-color: #233434;
     border-radius: 4px;
 }
