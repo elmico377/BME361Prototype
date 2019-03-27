@@ -190,6 +190,9 @@ body {
 <title>Falcon</title>
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="server/index.js"></script>
+<script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/p5.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/addons/p5.dom.js"></script>
 <script type="text/javascript">
         jQuery(document).ready(function(){
             var r1001 = jQuery('#r1001')
@@ -224,12 +227,37 @@ body {
 				}
 			})
 			emunlock.bind('click',function (){
-				r1001door.css("background-color", "#bf4848");
+        r1001door.css("background-color", "#bf4848");
 			})
 			emlock.bind('click',function (){
-				r1001door.css("background-color", "#3f7755");
+        r1001door.css("background-color", "#3f7755");
+        
+        socket.send("OPEN DOOR");
 			})
         });
+
+        var socket = new WebSocket("ws://localhost:8081");
+
+        function setup() {
+          // The socket connection needs two event listeners:
+          socket.onopen = openSocket;
+          socket.onmessage = showData;
+        }
+
+        function openSocket() {
+          socket.send("Hello server");
+        }
+
+        /*
+        showData(), below, will get called whenever there is new Data
+        from the server.
+        */
+        function showData(result) {
+          // when the server returns, show the result in the div:
+          text.html("Sensor reading:" + result.data);
+          xPos = int(result.data);        // convert result to an integer
+          text.position(xPos, 10);        // position the text
+        }
 </script>
 </head>
 <body style="background-color:#233434">
