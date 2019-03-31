@@ -135,12 +135,12 @@ body {
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: white;
+  background-color: #ccc;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: #8c8a8a;
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -178,6 +178,9 @@ body {
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+		var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+		var greenLoc = localStorage.getItem("greenlocation");
+		
         jQuery(document).ready(function(){
             var r1001 = jQuery('#r1001')
 			//var greenO = jQuery('GreenOutside')
@@ -186,21 +189,20 @@ body {
 			//var redI = jQuery('RedInside')
             // When click this button then execute below function.
 			var redLoc = 0;
-			var greenLoc = 0;
+			var greenLoc = 1;
 			
 			try{
-				redLoc = localstorage.getItem("redlocation"); // 1 means outside?
-				greenLoc = localstorage.getItem("greenlocation");
+				redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+				greenLoc = localStorage.getItem("greenlocation");
 			}
 			catch(e){
 				redLoc = 1;
-				localstorage.setItem("redlocation",redLoc);
+				localStorage.setItem("redlocation",redLoc);
 				greenLoc = 0;
-				localstorage.setItem("greenlocation",greenLoc);
+				localStorage.setItem("greenlocation",greenLoc);
 			}
 			r1001.bind('click', function () {
-				alert('Attempting to Lock Door');
-				
+				//alert('Attempting to Lock Door');				
 			})
 			if (redLoc == 1){
 				$("#RedOutside").hide();
@@ -219,6 +221,44 @@ body {
 				$("#GreenInside").hide();
 			}
         });
+		
+		var socket = new WebSocket("ws://localhost:8081");
+
+        function setup() {
+          // The socket connection needs two event listeners:
+          socket.onopen = openSocket;
+          socket.onmessage = showData;
+        }
+
+        function openSocket() {
+          socket.send("Hello server");
+        }
+
+        /*
+        showData(), below, will get called whenever there is new Data
+        from the server.
+        */
+        function showData(result) {
+			// when the server returns, show the result in the div:
+			if (result == "733F511D"){
+				if (redLoc == 0){
+					redLoc = 1;
+				}
+				else{
+					redLoc = 0;
+				}
+				localstorage.setItem("redlocation",redLoc);
+			}
+			if (result == "CE6FC973"){
+				if (greenLoc == 0){
+					greenLoc = 1;
+				}
+				else{
+					greenLoc = 0;
+				}
+				localstorage.setItem("greenlocation",greenLoc);
+			}
+        }
 </script>
 </head>
 <body style="background-color:#233434">
@@ -272,8 +312,32 @@ body {
 		updateClock(); // initial call
 	</script>
 	
-	<div style="background-color:white;height:70%;width:80%;margin-left:10%;margin-bottom:5%">
-		
+	<div style="height:45%;width:100%;margin-bottom:5%">
+		<div style="background-color:#825050;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
+			<p style="font-family:Open Sans; color:white; font-size:16pt; display:inline; padding-left: 20px; padding-right: 100px">Conflict Risk:</p>
+			<p style="font-family:Open Sans; color:white; font-size:16pt; display:inline;">16:42:56</p>			
+			<p style="font-family:Open Sans; color:white; font-size:12pt; display:inline;padding-left:20px"> Mark and Jackson in the Hallway</p>	
+		</div>
+		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
+			<img id="GreenInside" src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:100px;">Mark</p>
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline">16:44:22</p>
+			<p style="font-family:Open Sans; color:white; font-size:12pt;">Exited the Patient Room</p>
+		</div>
+		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
+			<img id="GreenInside" src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:75px;">Jackson</p>
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline">16:41:22</p>
+			<p style="font-family:Open Sans; color:white; font-size:12pt;">Exited the Patient Room</p>
+		</div>
+		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
+			<img id="GreenInside" src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:100px;">Patient Added: Mark Hamill</p>
+		</div>
+		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
+			<img id="GreenInside" src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:75px;">Patient Added: Jackson Pollock</p>
+		</div>
 	</div>
 	
 </div>
@@ -322,28 +386,17 @@ body {
 	  <!-- Modal content -->
 	  <div class="modal-content">
 		<span class="close">&times;</span>
-		<div style="background-color:#b8c7e0; margin-right:30px; margin-left:30px;text-align:left;padding-top:10px;padding-bottom:10px">
-			<p style="font-family:Open Sans;text-align:center;font-size:18pt">Activity Board Notifications</p>
+		<div style=" margin-right:30px; margin-left:30px;text-align:left;margin-top:10px;padding-top:10px;padding-bottom:10px">
+			<p style="font-family:Open Sans;text-align:center;font-size:18pt">EXPORT ACTIVITY REPORTS</p>
 			<label class="container">
-				<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Entering/Exiting Room</p><br>
+				<input type="checkbox" style="border: 2px solid black;solid;box-sizing: border-box;"> <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Full Unit Report</p><br>
 			</label>
+			<p style="padding-left:50px;font-family:Open Sans">All entering and exiting data for all rooms in the unit, along with conflict alerts</p>
 			<label class="container">
-				<input type="checkbox" ><span class="checkmark"></span> <p style="display:inline;text-align:left;font-family:Open Sans">Conflict Risks</p><br>
+				<input type="checkbox" style="border: 2px solid black;box-sizing: border-box;"><span class="checkmark"></span> <p style="display:inline;text-align:left;font-family:Open Sans">Each Patient's Activity Timeline</p><br>
 			</label>
-			<label class="container">
-			<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Room at Full Occupancy</p><br>
-			</label>
-			<button style="margin:0 auto; display:block">Save</button>
-		</div>
-		<div style="background-color:#b8c7e0; margin-right:30px; margin-left:30px;text-align:left;margin-top:10px;padding-top:10px;padding-bottom:10px">
-			<p style="font-family:Open Sans;text-align:center;font-size:18pt">Export Reports</p>
-			<label class="container">
-				<input type="checkbox" > <span class="checkmark"></span><p style="display:inline;text-align:left;font-family:Open Sans">Full Unit Report</p><br>
-			</label>
-			<label class="container">
-				<input type="checkbox" ><span class="checkmark"></span> <p style="display:inline;text-align:left;font-family:Open Sans">Each Patient's Activity Timeline</p><br>
-			</label>
-			<button style="margin:0 auto; display:block">Export</button>
+			<p style="padding-left:50px;font-family:Open Sans">All entering and exiting data organized by individual</p>
+			<button class="dankbutton" onclick="myFunction()" style="margin:0 auto; display:block">Export</button>
 		</div>
 	  </div>
 
@@ -359,6 +412,10 @@ body {
 		// Get the <span> element that closes the modal
 		var span = document.getElementsByClassName("close")[0];
 
+		var greybox = document.getElementById("greyout");
+		
+		var coll = document.getElementsByClassName("collapsible");
+		
 		// When the user clicks the button, open the modal 
 		btn.onclick = function() {
 		  modal.style.display = "block";
@@ -367,14 +424,21 @@ body {
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 		  modal.style.display = "none";
+		  greybox.style.display = "none";
 		}
 
 		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event) {
 		  if (event.target == modal) {
 			modal.style.display = "none";
+			greybox.style.display = "none";
 		  }
 		}
+	</script>
+	<script>
+	function myFunction() {
+	  alert("Unable to Export Document Current");
+	}
 	</script>
 </div>
 </body>

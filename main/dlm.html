@@ -185,6 +185,64 @@ body {
 .backbutton:hover{
 	background-color:#334949;
 }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
 <head>
 <title>Falcon</title>
@@ -199,43 +257,79 @@ body {
 			var r1001door = jQuery('#r1001door')
 			var emunlock = jQuery('#emunlock')
 			var emlock = jQuery('#emlock')
+			var toto = jQuery('#patRoomEnabled')
 			var state = true;
             // When click this button then execute below function.
-            r1001.bind('click', function () {
+			
+			toto.click(function() {
+				if (state == false){
+					//alert('Attempting to Lock Door');
+					state = true;
+					r1001door.css("background-color", "#3f7755");
+				}
+				else{
+					//alert('Attempting to Unlock Door');
+					state = false;
+					r1001door.css("background-color", "#bf4848");
+					socket.send("OPEN DOOR");
+				}
+			});
+			
+            //r1001.bind('click', function () {
                 // Alert the text.
-				if (state == false){
-					alert('Attempting to Lock Door');
-					state = true;
-					r1001door.css("background-color", "#3f7755");
-				}
-				else{
-					alert('Attempting to Unlock Door');
-					state = false;
-					r1001door.css("background-color", "#bf4848");
-				}
-            })
-			r1001door.bind('click', function () {
-				if (state == false){
-					alert('Attempting to Lock Door');
-					state = true;
-					r1001door.css("background-color", "#3f7755");
-				}
-				else{
-					alert('Attempting to Unlock Door');
-					state = false;
-					r1001door.css("background-color", "#bf4848");
-				}
-			})
+			//	if (state == false){
+			//		alert('Attempting to Lock Door');
+			//		toto.attr("checked", true);
+			//		state = true;
+			//		r1001door.css("background-color", "#3f7755");
+			//	}
+			//	else{
+			//		alert('Attempting to Unlock Door');
+			//		toto.attr("checked", false);
+			//		state = false;
+			//		r1001door.css("background-color", "#bf4848");
+			//	}
+            //})
+			//r1001door.bind('click', function () {
+			//	if (state == false){
+			//		alert('Attempting to Lock Door');
+			//		toto.attr("checked", true);
+			//		state = true;
+			//		r1001door.css("background-color", "#3f7755");
+			//	}
+			//	else{
+			//		alert('Attempting to Unlock Door');
+			//		toto.attr("checked", false);
+			//		state = false;
+			//		r1001door.css("background-color", "#bf4848");
+			//	}
+			//})
 			emunlock.bind('click',function (){
         r1001door.css("background-color", "#bf4848");
+		toto.attr("checked", false);
 			})
 			emlock.bind('click',function (){
         r1001door.css("background-color", "#3f7755");
+		toto.attr("checked", true);
         
         socket.send("OPEN DOOR");
 			})
         });
 
+		var redLoc = 0;
+		var greenLoc = 0;
+		
+		try{
+			redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+			greenLoc = localStorage.getItem("greenlocation");
+		}
+		catch(e){
+			redLoc = 1;
+			localStorage.setItem("redlocation",redLoc);
+			greenLoc = 0;
+			localStorage.setItem("greenlocation",greenLoc);
+		}
+		
         var socket = new WebSocket("ws://localhost:8081");
 
         function setup() {
@@ -253,10 +347,27 @@ body {
         from the server.
         */
         function showData(result) {
-          // when the server returns, show the result in the div:
-          text.html("Sensor reading:" + result.data);
-          xPos = int(result.data);        // convert result to an integer
-          text.position(xPos, 10);        // position the text
+			// when the server returns, show the result in the div:
+			var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+			var greenLoc = localStorage.getItem("greenlocation");
+			if (result == "733F511D"){
+				if (redLoc == 0){
+					redLoc = 1;
+				}
+				else{
+					redLoc = 0;
+				}
+				localstorage.setItem("redlocation",redLoc);
+			}
+			if (result == "CE6FC973"){
+				if (greenLoc == 0){
+					greenLoc = 1;
+				}
+				else{
+					greenLoc = 0;
+				}
+				localstorage.setItem("greenlocation",greenLoc);
+			}
         }
 </script>
 </head>
@@ -285,13 +396,17 @@ body {
 	<h3 style="font-family: Open Sans; color:#e0ecff;text-align:center"> Lock Activation:</h3>
 	
 	<div style="height:45%;width:80%;margin-left:10%;margin-bottom:5%">
-		<div style="background-color:#334949;height:10%"><p style="font-family:Open Sans; color:white">Patient Room</p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
-		<div style="background-color:#334949;height:10%"><p></p></div>
+		<div style="background-color:#334949;height:15%;margin-bottom:10px">
+			<p style="font-family:Open Sans; color:white;padding-top:2px;padding-left:20px;float:left">Patient Room</p>
+			<label class="switch" style="float:right;margin-right:10px;margin-top:10px">
+			  <input id="patRoomEnabled" type="checkbox" checked>
+			  <span class="slider round"></span>
+			</label>
+		</div>
+		<div style="background-color:#334949;height:15%"><p></p></div>
+		<div style="background-color:#334949;height:15%"><p></p></div>
+		<div style="background-color:#334949;height:15%"><p></p></div>
+		<div style="background-color:#334949;height:15%"><p></p></div>
 	</div>
 	<button class="backbutton" style="background-color:#334949; text-align:center;left:0px;top:0px;width:40%">Apply</button>
 	</br>

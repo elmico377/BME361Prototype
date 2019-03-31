@@ -185,6 +185,66 @@ body {
 .backbutton:hover{
 	background-color:#334949;
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
 <head>
 <title>Falcon</title>
@@ -215,7 +275,6 @@ body {
 		</div>
 	</div>
 </div>
-
 <!--                                                                  RIGHT SIDE -->
 <div class="splitright right">
 	<a href="main.html">
@@ -224,22 +283,105 @@ body {
 	<h1 style="font-family: Open Sans; color:#e0ecff;text-align:center"> ROOM </br>MANAGEMENT </h1>	
 	<h3 style="font-family: Open Sans; color:#e0ecff;text-align:center"> Access to Patient Room:</h3>
 	
-	<div style="height:60%;width:80%;margin-left:10%;margin-bottom:5%">
-		<div style="background-color:#334949;height:8%"><p style="font-family:Open Sans; color:white">MARK</p></div>
-		<div style="background-color:#334949;height:8%"><p style="font-family:Open Sans; color:white">JACKSON</p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
-		<div style="background-color:#334949;height:8%"><p></p></div>
+	<div style="height:60%;width:80%;margin-left:10%;margin-bottom:5%;text-align:left">
+		<div style="background-color:#334949;height:12%;margin-bottom:10px">
+			<p style="font-family:Open Sans; color:white;padding-top:2px;padding-left:20px;float:left">MARK</p>
+			<label class="switch" style="float:right;margin-right:10px;margin-top:10px">
+			  <input id="mark" type="checkbox" checked>
+			  <span class="slider round"></span>
+			</label>
+		</div>
+		<div style="background-color:#334949;height:12%'text-align:left">
+			<p style="font-family:Open Sans; color:white;padding-top:8px;padding-left:20px;float:left">JACKSON</p>
+			<label class="switch" style="float:right;margin-right:10px;margin-top:16px">
+			  <input id="jackson" type="checkbox" checked>
+			  <span class="slider round"></span>
+			</label>
+		</div>
+		<div style="background-color:#334949;height:12%"><p></p></div>
+		<div style="background-color:#334949;height:12%"><p></p></div>
+		<div style="background-color:#334949;height:12%"><p></p></div>
+		<div style="background-color:#334949;height:12%"><p></p></div>
+		<div style="background-color:#334949;height:12%"><p></p></div>
 	</div>
 	<a href="roomManager.html">
 		<button class="backbutton" style=" text-align:center;left:0px;top:0px;width:25%;border-style:solid;border-color:white;border-width:1px">Save</button>
 	</a>
 		
 </div>
+<script>
+	var socket = new WebSocket("ws://localhost:8081");
 
+	function setup() {
+		// The socket connection needs two event listeners:
+		socket.onopen = openSocket;
+		socket.onmessage = showData;
+	}
+
+	function openSocket() {
+		socket.send("Hello server");
+	}
+	
+	function showData(result) {
+		// when the server returns, show the result in the div:
+		var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+		var greenLoc = localStorage.getItem("greenlocation");
+		if (result == "733F511D"){
+			if (redLoc == 0){
+				redLoc = 1;
+			}
+			else{
+				redLoc = 0;
+			}
+			localstorage.setItem("redlocation",redLoc);
+		}
+		if (result == "CE6FC973"){
+			if (greenLoc == 0){
+				greenLoc = 1;
+			}
+			else{
+				greenLoc = 0;
+			}
+			localstorage.setItem("greenlocation",greenLoc);
+		}
+    }
+	
+	var mark = jQuery('#mark')
+	var jackson = jQuery('#jackson')
+	var markAllowed = true;
+	var jacksonAllowed = true;
+	
+	try{
+		markAllowed = localStorage.getItem("markAllowed"); 
+		jacksonAllowed = localStorage.getItem("jacksonAllowed");
+	}
+	catch(e){
+		localStorage.setItem("markAllowed",markAllowed);
+		localStorage.setItem("jacksonAllowed",jacksonAllowed);
+	}
+	
+	mark.click(function() {
+		alert("mark was toggled");
+		if (markAllowed){
+			socket.send("CE6FC973: 0");
+		}
+		else{
+			socket.send("CE6FC973: 1");
+		}
+		markAllowed = !markAllowed;
+	});
+	
+	jackson.click(function() {
+		alert("jackson was toggled");
+		if (jacksonAllowed){
+			socket.send("733F511D: 0");
+		}
+		else{
+			socket.send("733F511D: 1");
+		}
+		jacksonAllowed = !jacksonAllowed;
+	});
+	
+</script>
 </body>
 </html>

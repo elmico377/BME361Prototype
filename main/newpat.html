@@ -45,6 +45,48 @@
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 </head>
 <body style="background-color:#233434">
+<script>
+	var socket = new WebSocket("ws://localhost:8081");
+
+	function setup() {
+		// The socket connection needs two event listeners:
+		socket.onopen = openSocket;
+		socket.onmessage = showData;
+	}
+
+	function openSocket() {
+		socket.send("Hello server");
+	}
+	
+	function showData(result) {
+		// when the server returns, show the result in the div:
+		var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+		var greenLoc = localStorage.getItem("greenlocation");
+		if (result == "733F511D"){
+			if (redLoc == 0){
+				redLoc = 1;
+			}
+			else{
+				redLoc = 0;
+			}
+			localstorage.setItem("redlocation",redLoc);
+		}
+		if (result == "CE6FC973"){
+			if (greenLoc == 0){
+				greenLoc = 1;
+			}
+			else{
+				greenLoc = 0;
+			}
+			localstorage.setItem("greenlocation",greenLoc);
+		}
+    }
+</script>
+<script>
+function myFunction() {
+  alert("Addition of patients not yet added!");
+}
+</script>
 	<div class="splitleft left" style="background-color:white;margin:0;padding:0;text-align:center;padding-left:5%;padding-right:5%;padding-top:2%;box-sizing:border-box">
 		<div style="text-align:right;padding-bottom:2%">
 			<span style="font-family: Open Sans, Times, serif;color:#233434;font-size:14pt;margin-right:70%">First Name</span>
@@ -97,7 +139,7 @@
 		</a>
 		<h1 style="font-family: Open Sans; color:#e0ecff;text-align:center"> ADD A PATIENT </h1>
 		<a href="patmanager.html">
-		<button class="backbutton" style="text-align:center;left:0px;top:0px;margin-top:150%;width:20%;margin-left:40%;border-style:solid;border-color:white;border-width:1px">Save</button>
+		<button class="backbutton" onclick="myFunction()" style="text-align:center;left:0px;top:0px;margin-top:150%;width:20%;margin-left:40%;border-style:solid;border-color:white;border-width:1px">Save</button>
 		</a>
 	</div>
 </body>

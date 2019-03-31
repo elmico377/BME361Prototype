@@ -20,7 +20,43 @@
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
 </head>
 <body style="background-color:#233434">
+<script>
+	var socket = new WebSocket("ws://localhost:8081");
 
+	function setup() {
+		// The socket connection needs two event listeners:
+		socket.onopen = openSocket;
+		socket.onmessage = showData;
+	}
+
+	function openSocket() {
+		socket.send("Hello server");
+	}
+	
+	function showData(result) {
+		// when the server returns, show the result in the div:
+		var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+		var greenLoc = localStorage.getItem("greenlocation");
+		if (result == "733F511D"){
+			if (redLoc == 0){
+				redLoc = 1;
+			}
+			else{
+				redLoc = 0;
+			}
+			localstorage.setItem("redlocation",redLoc);
+		}
+		if (result == "CE6FC973"){
+			if (greenLoc == 0){
+				greenLoc = 1;
+			}
+			else{
+				greenLoc = 0;
+			}
+			localstorage.setItem("greenlocation",greenLoc);
+		}
+    }
+</script>
 	<a href="main.html">
 		<button class="backbutton" style="position:absolute;left:0px;top:0px;width:80px">← Back</button>
 	</a>
@@ -29,10 +65,10 @@
 	<p style="text-align:center"><input type="text" name="search" value="Search"></p>
 	
 	<a href="patmanager2.html">
-		<button class="backbutton" style="margin-bottom:10pt;background-color:#304040;text-align:center;left:0px;top:0px;width:10%;margin-left:45%;margin-top:20pt">MARK</button>
+		<button class="backbutton" style="margin-bottom:10pt;background-color:#304040;text-align:left;left:0px;top:0px;width:10%;margin-left:45%;margin-top:20pt;font-size:12pt;"><img src="Green_Oval.png" height="22" width="22" style="padding-right:25px;"><span style="padding-top:0">MARK</span></button>
 	</a>
-	<a href="patmanager2.html">
-		<button class="backbutton" style="display:inline-block;background-color:#304040;text-align:center;left:0px;top:0px;width:10%;margin-left:45%;display">JACKSON</button>
+	<a href="patmanager3.html">
+		<button class="backbutton" style="display:inline-block;background-color:#304040;text-align:left;left:0px;top:0px;width:10%;margin-left:45%;display;font-size:12pt"><img src="Red_Oval.png" height="22" width="22" style="padding-right:25px;">JACKSON</button>
 	</a>
 	
 	<a href="newpat.html">
