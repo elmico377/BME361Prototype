@@ -1,7 +1,7 @@
 // Setup serial port
 var SerialPort = require('serialport');
 var Readline = require('@serialport/parser-readline');
-var port = new SerialPort('/dev/tty.wchusbserial1410', { baudRate: 9600 });
+var port = new SerialPort('COM3', { baudRate: 9600 });
 
 // Setup web socket
 var WebSocketServer = require('ws').Server;

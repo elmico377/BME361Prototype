@@ -348,38 +348,68 @@ input:checked + .slider:before {
 	
 	var mark = jQuery('#mark')
 	var jackson = jQuery('#jackson')
-	var markAllowed = true;
-	var jacksonAllowed = true;
+	var markAllowed;
+	var jacksonAllowed;
 	
 	try{
 		markAllowed = localStorage.getItem("markAllowed"); 
 		jacksonAllowed = localStorage.getItem("jacksonAllowed");
+		//alert(markAllowed);
+		if (markAllowed == "true"){
+			mark.attr("checked", true);
+			markAllowed = true;
+		}
+		else{
+			mark.attr("checked", false);
+			markAllowed = false;
+		}
+		
+		if (jacksonAllowed == "true"){
+			jackson.attr("checked", true);
+			jacksonAllowed = true;
+		}
+		else{
+			jackson.attr("checked", false);
+			jacksonAllowed = false;
+		}
 	}
 	catch(e){
+		markAllowed = true;
+		jacksonAllowed = true;
 		localStorage.setItem("markAllowed",markAllowed);
 		localStorage.setItem("jacksonAllowed",jacksonAllowed);
 	}
 	
 	mark.click(function() {
-		alert("mark was toggled");
+		
 		if (markAllowed){
+			
 			socket.send("CE6FC973: 0");
+			localStorage.setItem("markAllowed",false);
+			//alert("mark is not allowed");
+			markAllowed = false;
 		}
 		else{
+			//alert("mark is allowed");
 			socket.send("CE6FC973: 1");
+			localStorage.setItem("markAllowed",true);
+			markAllowed = true;
 		}
-		markAllowed = !markAllowed;
 	});
 	
 	jackson.click(function() {
-		alert("jackson was toggled");
 		if (jacksonAllowed){
+			//alert("jackson is banned");
 			socket.send("733F511D: 0");
+			localStorage.setItem("jacksonAllowed",false);
+			markAllowed = false;
 		}
 		else{
+			//alert("jackson is allowed");
 			socket.send("733F511D: 1");
+			localStorage.setItem("jacksonAllowed",true);
+			markAllowed = true;
 		}
-		jacksonAllowed = !jacksonAllowed;
 	});
 	
 </script>

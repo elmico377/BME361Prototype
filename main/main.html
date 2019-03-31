@@ -243,18 +243,26 @@ body {
 			if (result == "733F511D"){
 				if (redLoc == 0){
 					redLoc = 1;
+					$("#RedOutside").hide();
+					$("#RedInside").show();
 				}
 				else{
 					redLoc = 0;
+					$("#RedOutside").show();
+					$("#RedInside").hide();
 				}
 				localstorage.setItem("redlocation",redLoc);
 			}
 			if (result == "CE6FC973"){
 				if (greenLoc == 0){
 					greenLoc = 1;
+					$("#GreenOutside").hide();
+					$("#GreenInside").show();
 				}
 				else{
 					greenLoc = 0;
+					$("#GreenOutside").show();
+					$("#GreenInside").hide();
 				}
 				localstorage.setItem("greenlocation",greenLoc);
 			}

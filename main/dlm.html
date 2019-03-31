@@ -305,14 +305,13 @@ input:checked + .slider:before {
 			//	}
 			//})
 			emunlock.bind('click',function (){
-        r1001door.css("background-color", "#bf4848");
-		toto.attr("checked", false);
+				r1001door.css("background-color", "#bf4848");
+				toto.attr("checked", false);
+				socket.send("OPEN DOOR");
 			})
 			emlock.bind('click',function (){
-        r1001door.css("background-color", "#3f7755");
-		toto.attr("checked", true);
-        
-        socket.send("OPEN DOOR");
+				r1001door.css("background-color", "#3f7755");
+				toto.attr("checked", true);
 			})
         });
 
