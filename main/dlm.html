@@ -349,23 +349,25 @@ input:checked + .slider:before {
 			// when the server returns, show the result in the div:
 			var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
 			var greenLoc = localStorage.getItem("greenlocation");
-			if (result == "733F511D"){
+			if (int(result.data.substring(1,2)) == 3){
+				//alert(redLoc);
 				if (redLoc == 0){
 					redLoc = 1;
 				}
 				else{
 					redLoc = 0;
 				}
-				localstorage.setItem("redlocation",redLoc);
+				//alert(redLoc);
+				localStorage.setItem("redlocation",redLoc);
 			}
-			if (result == "CE6FC973"){
+			if (int(result.data.substring(1,2)) == 4){
 				if (greenLoc == 0){
 					greenLoc = 1;
 				}
 				else{
 					greenLoc = 0;
 				}
-				localstorage.setItem("greenlocation",greenLoc);
+				localStorage.setItem("greenlocation",greenLoc);
 			}
         }
 </script>

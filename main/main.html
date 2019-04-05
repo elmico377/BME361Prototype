@@ -177,97 +177,6 @@ body {
 <title>Falcon</title>
 <link rel="icon" href="headlogo.png">
 <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-		var redLoc = localStorage.getItem("redlocation"); // 1 means outside?
-		var greenLoc = localStorage.getItem("greenlocation");
-		
-        jQuery(document).ready(function(){
-            var r1001 = jQuery('#r1001')
-			//var greenO = jQuery('GreenOutside')
-			//var greenI = jQuery('GreenInside')
-			//var redO = jQuery('RedOutside')
-			//var redI = jQuery('RedInside')
-            // When click this button then execute below function.
-			var redLoc = 0;
-			var greenLoc = 1;
-			
-			try{
-				redLoc = localStorage.getItem("redlocation"); // 1 means outside?
-				greenLoc = localStorage.getItem("greenlocation");
-			}
-			catch(e){
-				redLoc = 1;
-				localStorage.setItem("redlocation",redLoc);
-				greenLoc = 0;
-				localStorage.setItem("greenlocation",greenLoc);
-			}
-			r1001.bind('click', function () {
-				//alert('Attempting to Lock Door');				
-			})
-			if (redLoc == 1){
-				$("#RedOutside").hide();
-				$("#RedInside").show();
-			}
-			else{
-				$("#RedOutside").show();
-				$("#RedInside").hide();
-			}
-			if (greenLoc == 1){
-				$("#GreenOutside").hide();
-				$("#GreenInside").show();
-			}
-			else{
-				$("#GreenOutside").show();
-				$("#GreenInside").hide();
-			}
-        });
-		
-		var socket = new WebSocket("ws://localhost:8081");
-
-        function setup() {
-          // The socket connection needs two event listeners:
-          socket.onopen = openSocket;
-          socket.onmessage = showData;
-        }
-
-        function openSocket() {
-          socket.send("Hello server");
-        }
-
-        /*
-        showData(), below, will get called whenever there is new Data
-        from the server.
-        */
-        function showData(result) {
-			// when the server returns, show the result in the div:
-			if (result == "733F511D"){
-				if (redLoc == 0){
-					redLoc = 1;
-					$("#RedOutside").hide();
-					$("#RedInside").show();
-				}
-				else{
-					redLoc = 0;
-					$("#RedOutside").show();
-					$("#RedInside").hide();
-				}
-				localstorage.setItem("redlocation",redLoc);
-			}
-			if (result == "CE6FC973"){
-				if (greenLoc == 0){
-					greenLoc = 1;
-					$("#GreenOutside").hide();
-					$("#GreenInside").show();
-				}
-				else{
-					greenLoc = 0;
-					$("#GreenOutside").show();
-					$("#GreenInside").hide();
-				}
-				localstorage.setItem("greenlocation",greenLoc);
-			}
-        }
-</script>
 </head>
 <body style="background-color:#233434">
 <!--                                                                  LEFT SIDE -->
@@ -277,13 +186,21 @@ body {
 		</div>
 		<div id="r1001" style="height:100%;width:70%;z-index:1;top:0;background-color:#E2F3EF;float:left;box-sizing:border-box;border-color:grey;border-style:solid;border-width:2 2 2 2">
 			<h2 style="font-family: Open Sans;">Patient Room</h2>
-			<img id="GreenInside" src="Green_Oval.png" height="42" width="42">
-			<img id="RedInside" src="Red_Oval.png" height="42" width="42">
+			<a href="patmanager2.html">
+				<img id="GreenInside" src="Green_Oval.png" height="42" width="42">
+			</a>
+			<a href="patmanager3.html">
+				<img id="RedInside" src="Red_Oval.png" height="42" width="42">
+			</a>
 		</div>
 		<div style="height:100%;width:15%;z-index:1;top:0;background-color:white;float:left;">		
 		</div>
-		<img id="GreenOutside" src="Green_Oval.png" height="42" width="42" style="margin-top:100px">
-		<img id="RedOutside" src="Red_Oval.png" height="42" width="42" style="margin-top:100px">
+		<a href="patmanager2.html">
+			<img id="GreenOutside" src="Green_Oval.png" height="42" width="42" style="margin-top:100px">
+		</a>
+		<a href="patmanager3.html">
+			<img id="RedOutside" src="Red_Oval.png" height="42" width="42" style="margin-top:100px">
+		</a>
 	</div>
 </div>
 
@@ -327,23 +244,31 @@ body {
 			<p style="font-family:Open Sans; color:white; font-size:12pt; display:inline;padding-left:20px"> Mark and Jackson in the Hallway</p>	
 		</div>
 		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
-			<img id="GreenInside" src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<a href="patmanager2.html">
+				<img src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			</a>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:100px;">Mark</p>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline">16:44:22</p>
 			<p style="font-family:Open Sans; color:white; font-size:12pt;">Exited the Patient Room</p>
 		</div>
 		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
-			<img id="GreenInside" src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<a href="patmanager3.html">
+				<img src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			</a>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:75px;">Jackson</p>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline">16:41:22</p>
 			<p style="font-family:Open Sans; color:white; font-size:12pt;">Exited the Patient Room</p>
 		</div>
 		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
-			<img id="GreenInside" src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<a href="patmanager2.html">
+				<img src="head1.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			</a>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:100px;">Patient Added: Mark Hamill</p>
 		</div>
 		<div style="background-color:#334949;height:25%;margin-bottom:5px;padding-top:20px;text-align:left">
-			<img id="GreenInside" src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			<a href="patmanager3.html">
+				<img src="head2.png" height="55" width="55" style="float:left;padding-left:20px;padding-right:20px">
+			</a>
 			<p style="font-family:Open Sans; color:white; font-size:16pt;display:inline;padding-right:75px;">Patient Added: Jackson Pollock</p>
 		</div>
 	</div>
@@ -449,5 +374,117 @@ body {
 	}
 	</script>
 </div>
+<script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="server/index.js"></script>
+<script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/p5.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/addons/p5.dom.js"></script>
+<script>
+	var socket = new WebSocket("ws://localhost:8081");
+	var redLoc = 0;
+	var greenLoc = 1;
+		
+	function setup() {
+		// The socket connection needs two event listeners:
+		socket.onopen = openSocket;
+		socket.onmessage = showData;
+		try{
+			redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+			if (redLoc == null){
+				redLoc = 0;
+				localStorage.setItem("redlocation",redLoc);	
+				alert("this shouldn't appear more than one reload");
+			}
+		}
+		catch(e){
+			redLoc = 0;
+		}
+		try{
+			greenLoc = localStorage.getItem("greenlocation");
+			if (greenLoc == null){
+				greenLoc = 0;
+				localStorage.setItem("greenlocation",redLoc);		
+				alert("same with this one");				
+			}
+		}
+		catch(e){
+			greenLoc = 0;
+		}
+	}
+
+	function openSocket() {
+		socket.send("Hello server");
+	}
+	
+	function showData(result) {
+		// when the server returns, show the result in the div:
+		//alert(int(result.data.substring(1,2)));
+		//var redLoc = localStorage.getItem("redlocation"); // 1 means inside?
+		//var greenLoc = localStorage.getItem("greenlocation");
+		if (int(result.data.substring(1,2)) == 3){
+			//alert(redLoc);
+			if (redLoc == 0){
+				redLoc = 1;
+				$("#RedOutside").hide();
+				$("#RedInside").show();
+			}
+			else{
+				redLoc = 0;
+				$("#RedOutside").show();
+				$("#RedInside").hide();
+			}
+			//alert(redLoc);
+			localStorage.setItem("redlocation",redLoc);
+		}
+		if (int(result.data.substring(1,2)) == 4){
+			if (greenLoc == 0){
+				greenLoc = 1;
+				$("#GreenOutside").hide();
+				$("#GreenInside").show();
+			}
+			else{
+				greenLoc = 0;
+				$("#GreenOutside").show();
+				$("#GreenInside").hide();
+			}
+			localStorage.setItem("greenlocation",greenLoc);
+		}
+    }
+		
+    jQuery(document).ready(function(){
+        var r1001 = jQuery('#r1001')
+		//var redLoc = 0;
+		//var greenLoc = 1;
+			
+		//try{
+		//	redLoc = localStorage.getItem("redlocation"); // 1 means outside?
+		//	greenLoc = localStorage.getItem("greenlocation");
+		//}
+		//catch(e){
+		//	redLoc = 1;
+		//	localStorage.setItem("redlocation",redLoc);
+		//	greenLoc = 0;
+		//	localStorage.setItem("greenlocation",greenLoc);
+		//}
+		r1001.bind('click', function () {
+		//alert('Attempting to Lock Door');				
+		})
+		if (redLoc == 1){
+			$("#RedOutside").hide();
+			$("#RedInside").show();
+		}
+		else{
+			$("#RedOutside").show();
+			$("#RedInside").hide();
+		}
+		if (greenLoc == 1){
+			$("#GreenOutside").hide();
+			$("#GreenInside").show();
+		}
+		else{
+			$("#GreenOutside").show();
+			$("#GreenInside").hide();
+		}
+    });
+</script>
 </body>
 </html>

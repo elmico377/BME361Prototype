@@ -26,9 +26,12 @@ function readSerialData(data) {
     }
 
     // Arduino has requested client master key 
-    if (data == 3) {
+    if (data == 0) {
         port.write("733F511D");
     }
+	else if (data == 1){
+		port.write("CE6FC973");
+	}
 }
 
 // Web socket server event functions
